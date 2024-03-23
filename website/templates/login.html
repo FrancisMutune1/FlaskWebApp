@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Register - TradeSync{% endblock %}
+
+{% block content %}
+
+
+    
+        <form  method="post">
+            <h1>Login to TradeSync</h1>
+            <div class="login-container">
+                <label for="username">Enter Username or Email:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="login-container">
+                <label for="password">Enter Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    
+{% endblock %}

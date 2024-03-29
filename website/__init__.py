@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+# import os
 
 db=SQLAlchemy()
 DB_NAME= "database.db"
@@ -9,7 +10,8 @@ DB_NAME= "database.db"
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY']='kingkong'
-    app.config['SQLALCHEMY_DATABASE_URI']= f'sqlite:///{DB_NAME}' 
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DB_NAME)
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
     db.init_app(app)
 
     from .views import views
@@ -26,15 +28,18 @@ def create_app():
 
 import logging
 
+import os
+
 def create_database(app):
-    if not path.exists ('website/'+DB_NAME):
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DB_NAME)
+    if not os.path.exists(db_path):
         try:
             with app.app_context():
                 db.create_all()
             print('Created Database')
 
         except Exception as e:
-                    print(f"Error creating database: {str(e)}")
-                    logging.exception("Error creating database:")
+            print(f"Error creating database: {str(e)}")
+            logging.exception("Error creating database:")
         else:
-                print('Database already exists')
+            print('Database already exists')
